@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.Scanner;
 
 public class TaskOne {
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) {
         File fileToRead = new File("src" + File.separator + "main" + File.separator
                                    + "resources" + File.separator + "Starlight.txt");
         File fileToWrite = new File("src" + File.separator + "main"
