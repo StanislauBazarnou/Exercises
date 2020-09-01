@@ -11,6 +11,7 @@ public class TaskTwo {
         showMenu();
         ArrayDeque<Character> stack = getStackWithDigits(scanner.nextLong());
         stack.forEach(System.out::print);
+        scanner.close();
     }
 
     private static void showMenu() {
