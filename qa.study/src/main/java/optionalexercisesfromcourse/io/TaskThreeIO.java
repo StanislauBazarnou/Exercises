@@ -10,41 +10,41 @@ public class TaskThreeIO {
         File sourceFile = new File("src" + File.separator + "main" + File.separator + "java"
                                    + File.separator + "optionalexercisesfromcourse" + File.separator
                                    + "io" + File.separator + "TaskThreeIO.java");
-        File destinationFile = new File("src" + File.separator + "main" + File.separator + "java"
-                                        + File.separator + "optionalexercisesfromcourse" + File.separator
-                                        + "io" + File.separator + "DestinationFile.txt");
+        File destinationFile = new File("src" + File.separator + "main" + File.separator
+                                        + "resources" + File.separator + "DestinationFile.txt");
 
-        writeContentToFile(sourceFile, destinationFile);
+        String reversedContent = getReversedContent(sourceFile);
+        writeContentToFile(reversedContent, destinationFile);
     }
 
-    public static void writeContentToFile(File sourceFile, File destinationFile) {
-        if (sourceFile.exists()) {
+    private static String getReversedContent(File sourceFile) {
+        StringBuilder reversedContent = new StringBuilder();
+
+        try (Scanner scanner = new Scanner(new FileReader(sourceFile))) {
+            while (scanner.hasNext()) {
+                StringBuilder scannedString = new StringBuilder();
+                scannedString.append(scanner.nextLine()).reverse();
+                reversedContent.append(scannedString).append("\n");
+            }
+        } catch (FileNotFoundException exception) {
+            System.err.println("File " + sourceFile.getName() + " has not been found.");
+        }
+        return reversedContent.toString();
+    }
+
+    private static void writeContentToFile(String reversedContent, File destinationFile) {
+        if (!reversedContent.isEmpty()) {
             try (PrintWriter printWriter = new PrintWriter(new BufferedWriter(
                                                                new FileWriter(destinationFile)))) {
-                printWriter.print(getReversedContent(sourceFile));
+                printWriter.print(reversedContent);
                 System.out.println("File \"" + destinationFile.getName()
                                    + "\" has been successfully written.");
             } catch(IOException exception){
                 System.err.println("File writing has been failed:\n" + exception);
             }
         } else {
-            System.out.println("In the absence of file \"" + sourceFile.getName() + "\"  "
-                               + "file \"" + destinationFile.getName() + "\" has not been written.");
+            System.out.println("File \"" + destinationFile.getName() + "\" has not been written "
+                               + "in the absence of source file.");
         }
-    }
-
-    private static String getReversedContent(File sourceFile) {
-        StringBuilder content = new StringBuilder();
-
-        try (Scanner scanner = new Scanner(new FileReader(sourceFile))) {
-            while (scanner.hasNext()) {
-                StringBuilder scannedString = new StringBuilder();
-                scannedString.append("\n").append(scanner.nextLine()).reverse();
-                content.append(scannedString);
-            }
-        } catch (FileNotFoundException exception) {
-            System.err.println("File " + sourceFile.getName() + " has not been found.");
-        }
-        return content.toString();
     }
 }
