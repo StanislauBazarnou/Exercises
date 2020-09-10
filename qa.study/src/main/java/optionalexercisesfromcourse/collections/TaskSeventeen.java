@@ -16,7 +16,7 @@ public class TaskSeventeen {
 
         try (Scanner scanner = new Scanner(new FileReader(file))) {
             while (scanner.hasNext()) {
-                String word = scanner.next();
+                String word = scanner.next().replaceAll("\\p{Punct}", " ");
                 if (words.containsKey(word)) {
                     words.put(word, (words.get(word)+1));
                 } else {
